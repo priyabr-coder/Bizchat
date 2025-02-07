@@ -1,7 +1,7 @@
 import streamlit as st
 import webbrowser
 import speech_recognition as sr
-from test6 import scrape_website, create_vector_store, get_text, get_text_chunks, query_vector_store, load_existing_index
+from knowledgepagebackend.test6 import scrape_website, create_vector_store, get_text, get_text_chunks, query_vector_store, load_existing_index
 
 def recognize_speech():
     recognizer = sr.Recognizer()
