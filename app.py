@@ -88,12 +88,11 @@ def create_vector_store(data, file_info):
     save_uploaded_files()  
 
 def get_conversation_chain():
-    prompt_template = """
-    Answer the question as detailed as possible by using the given context.
-    Don't provide incorrect answers. If you don't know the answer just say "I don't know".
-    Context:\n{context}\n
-    Question:\n{Question}\n
-    Answer:"""
+  prompt_template = """     You are a friendly assistant. Your job is to help the user with their queries. 
+  Refer to the knowledge base and provide precise answers based on the given context. 
+  Do not provide incorrect information. If you don't know the answer, just say "I don't know." 
+    Be polite and professional in your response.  
+    Context:\n{context}\n     Question:\n{Question}\n     Answer: """
     model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.5)
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "Question"])
     return load_qa_chain(model, chain_type="stuff", prompt=prompt)
