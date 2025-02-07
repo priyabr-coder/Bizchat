@@ -1,0 +1,27 @@
+streamlit
+langchain
+langchain_google_genai
+PyPDF2
+python-dotenv
+google-generativeai
+ipykernel
+langchain_community
+faiss-cpu
+beautifulsoup4
+python-dotenv 
+llama-index 
+nest_asyncio
+websockets==12.*
+httpx==0.*
+dataclasses-json==0.*
+dataclasses==0.*
+typing_extensions==4.*
+aenum==3.*
+deprecation==2.*
+
+# Async functionality, likely to be already installed
+aiohttp==3.*
+aiofiles==23.*
+
+SpeechRecognition
+pyaudio
