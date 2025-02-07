@@ -98,6 +98,11 @@ def get_conversation_chain():
     prompt = PromptTemplate(template=prompt_template, input_variables=["context", "Question"])
     return load_qa_chain(model, chain_type="stuff", prompt=prompt)
 
+@app.route('/')
+def home():
+    return "Welcome to knowlwdge repo!!", 200
+
+
 @app.route('/scrape', methods=['POST'])
 def scrape():
     data = request.json
