@@ -12,6 +12,9 @@ from langchain.prompts import PromptTemplate
 from dotenv import load_dotenv
 import json
 import os
+from pdf2image import convert_from_path
+import pytesseract
+import io
 
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
@@ -42,13 +45,20 @@ def scrape_website(url):
 
 def get_text_from_pdfs(pdf_files):
     text = ""
+    images_text = ""
     for pdf in pdf_files:
         pdf_reader = PdfReader(pdf)
         for page in pdf_reader.pages:
             text += page.extract_text()
-    return text
+        # Extract images and perform OCR
+        images = convert_from_path(pdf)
+        for img in images:
+            img_bytes = io.BytesIO()
+            img.save(img_bytes, format='PNG')
+            images_text += pytesseract.image_to_string(img) + "\n"
 
-import json
+    return text + "\n" + images_text
+
 
 # Load the uploaded files from a JSON file
 def load_uploaded_files():
@@ -66,7 +76,7 @@ def save_uploaded_files():
 # Initialize the uploaded_files list from the JSON file
 uploaded_files = load_uploaded_files()
 
-# Your routes here, make sure to call save_uploaded_files after any change
+
 
 
 def split_text(text):
@@ -88,10 +98,9 @@ def create_vector_store(data, file_info):
     save_uploaded_files()  
 
 def get_conversation_chain():
-    prompt_template = """You are a friendly assistant. Your job is to help the user with their queries. 
-    Refer to the knowledge base and provide precise answers based on the given context. 
-    Do not provide incorrect information. If you don't know the answer, just say "I don't know." 
-    Be polite and professional in your response.  
+    prompt_template = """You are a friendly and intelligent assistant.Your name is Thrylox. Using the information contained in the context, provide a comprehensive answer that directly addresses the question. Ensure that your response includes the exact keywords and terminology used by the user where relevant.
+    Learn from the conversation history to enhance response accuracy and relevance over time.Keep the response concise, professional, and relevant.
+    Do not provide incorrect or speculative information. If the answer cannot be deduced from the context, indicate that appropriately.  
     Context:\n{context}\nQuestion:\n{Question}\nAnswer: """
     
     model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.5)
@@ -168,7 +177,7 @@ def remove_file():
     # Save the updated list to the JSON file
     save_uploaded_files()
 
-    # In reality, you'd remove the vectors here. This is a simple example.
+   
     return jsonify({"message": f"File {file_content} removed successfully from the store"})
 
 @app.route('/clear_vector_store', methods=['POST'])
