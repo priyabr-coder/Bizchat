@@ -27,15 +27,14 @@ import os
 from pdf2image import convert_from_path
 import pytesseract
 import io
-<<<<<<< HEAD
+
 import base64
 import uuid
 import re
 import chromadb
 from pathlib import Path
 import logging
-=======
->>>>>>> 91d936bef7d847d5109dfdc4a29d40d31413bd13
+
 
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
