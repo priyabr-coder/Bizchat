@@ -27,12 +27,15 @@ import os
 from pdf2image import convert_from_path
 import pytesseract
 import io
+<<<<<<< HEAD
 import base64
 import uuid
 import re
 import chromadb
 from pathlib import Path
 import logging
+=======
+>>>>>>> 91d936bef7d847d5109dfdc4a29d40d31413bd13
 
 load_dotenv()
 api_key = os.getenv("GOOGLE_API_KEY")
@@ -257,7 +260,7 @@ def save_uploaded_files():
 # Initialize the uploaded_files list from the JSON file
 uploaded_files = load_uploaded_files()
 
-# Your routes here, make sure to call save_uploaded_files after any change
+
 
 
 def split_text(text):
@@ -398,7 +401,7 @@ def remove_file():
     # Save the updated list to the JSON file
     save_uploaded_files()
 
-    # In reality, you'd remove the vectors here. This is a simple example.
+   
     return jsonify({"message": f"File {file_content} removed successfully from the store"})
 
 @app.route('/clear_vector_store', methods=['POST'])
